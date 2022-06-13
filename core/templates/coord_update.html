@@ -1,0 +1,55 @@
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <div class="titulo">COORDENADORES</div>
+    <form name="personForm" id="personForm" class="form-horizontal" method="post" action="{% url 'coord_update' coord.id %}"
+        >
+        {% csrf_token %}
+        <div class="form1" style="height: 230px; width: 900px">
+            <div class="form-group row mb-2">
+                <label class="control-label col-sm-2" for="nome">Nome:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="nome" maxlength="50" required id="nome" value="{{ coord.nome }}">
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label class="control-label col-sm-2" for="crm">CRM:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="crm" maxlength="50" required id="crm" value="{{ coord.crm }}">
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label class="control-label col-sm-2 ml-3" for="data_admissao">Data Admissao:</label>
+                <div class="col-sm-2">
+                    <input type="text" name="data_admissao" maxlength="50" required id="data_admissao" value="{{ coord.data_inicio| date:"d/m/Y" }}">
+                </div>
+                <label class="control-label col-sm-2 ml-3" for="data_demissao">Data<br>Demissao:</label>
+                <div class="col-sm-2">
+                    <input type="text" name="data_demissao" maxlength="50" id="data_demissao" value="{{ coord.data_fim| date:"d/m/Y"}}">
+                </div>
+            </div>
+        </div>
+
+        <div class="botoes">
+            <div class="form-group" style="text-align: center">
+                <button type="submit" style="color: white; margin: 0 auto" class="btn btn-primary btn-lg">Alterar</button>
+            </div>
+        </div>
+        <div class="form-group">
+        <a href="{% url 'coord_delete' coord.id %}"
+        <Button type = "submit" class = "btn btn-danger btn-lg" style="float:right; margin-top:-66px;">
+             Excluir
+        </Button>
+        </a>
+    </div>
+
+        {% if messages %}
+            <div class="alert alert-warning">
+            {% for m in messages %}
+                <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m }}</p>
+            {% endfor %}
+            </div>
+        {% endif %}
+    </form>
+
+    {% endblock %}

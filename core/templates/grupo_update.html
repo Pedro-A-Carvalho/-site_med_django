@@ -1,0 +1,42 @@
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <div class="titulo">GRUPOS HOMOGENEOS</div>
+    <form name="form" id="form" class="form-horizontal" method="post" action="{% url 'grupo_update' grupo.id %}">
+        {% csrf_token %}
+        <div class="tab">
+            <ul class="nav nav-tabs">
+                <li class=" nav-item"><a class="nav-link active" href="{% url 'lista_grupos' %}">Grupos</a> </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'grupofuncao_novo' grupo.id %}">Funcao x Setor</a> </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'gruporisco_novo' grupo.id %}">Riscos</a> </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'grupoexame_novo' grupo.id %}">Exames</a> </li>
+            </ul>
+        </div>
+        <div class="form1">
+            <div class="form-group row">
+                <label class="control-label col-sm-3" for="nome">Nome</label>
+                <div class="col-sm-8">
+                    <input type="text" name="nome" maxlength="50" required id="id_nome" value="{{ grupo.nome }}">
+                </div>
+            </div>
+        </div>
+        <div class="botoes">
+            <div class="form-group" style="text-align: center">
+                <button type="submit" style="color: white; margin: 0 auto" class="btn btn-primary btn-lg">Editar</button>
+            </div>
+        </div>
+        <div class="form-group">
+            <a href="{% url 'grupo_delete' grupo.id %}" class="btn btn-danger btn-lg" style="float: right; margin-top: -46px" >
+                Excluir
+            </a>
+        </div>
+        {% if messages %}
+            <div class="alert alert-warning">
+            {% for m in messages %}
+                <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m }}</p>
+            {% endfor %}
+            </div>
+        {% endif %}
+    </form>
+
+    {% endblock %}

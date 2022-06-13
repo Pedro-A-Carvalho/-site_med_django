@@ -1,0 +1,70 @@
+    {% extends 'base.html' %}
+    
+    {% block content %}
+    <div class="titulo" style="text-transform: uppercase;">Exames</div>
+    <form name="form" id="form" class="form-horizontal" method="get" action="{% url 'exame_search' %}">
+        <div>
+            <div class="form-group row">
+                <label for="nome" class="col-sm-2 col-form-label">Exames:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-lg" name="search" id="search" placeholder="Digite o nome do exame">
+                </div>
+                <div class="col-sm-1">
+                    <button id="search-btn" type="submit" style="color:white" class="btn btn-primary">
+                        Search
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% if messages %}
+            <div class="alert alert-warning">{% for m in messages %}
+                <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m }}</p>
+            {% endfor %}
+            </div>
+        {% endif %}
+        <div class="botoes">
+            <div class="form-group">
+                <a href="{% url 'exame_novo' %}" style="color: white" class="btn btn-primary">Novo</a>
+            </div>
+        </div>
+        <div class="form2">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th style="text-transform: uppercase;">Exame</th>
+                    <th style="text-transform: uppercase;">Validade</th>
+                    <th style= "width: 50px">&nbsp</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for exame in exames %}
+                        <tr>
+                            <td>{{ exame.nome }}</td>
+                            <td>{{ exame.validade }}</td>
+                            <td><a href="{% url 'exame_update' exame.id %}">Editar</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            <span class="step-links">
+            {% if exames.has_previous %}
+                <a href="?page={{ exames.previous_page_number }}"><-</a>
+            {% endif %}
+            </span>
+
+            <span>
+                {{ exames.number }} de {{ exames.paginator.num_pages }}
+            </span>
+
+            <span>
+            {% if exames.has_next %}
+                <a href="?page={{ exames.next_page_number }}">-></a>
+            {% endif %}
+            </span>
+        </div>
+
+    </form>
+    
+    {% endblock %}

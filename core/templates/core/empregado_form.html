@@ -1,0 +1,130 @@
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <div class="titulo">EMPREGADOS</div>
+    <form name="personForm" id="personForm" class="form-horizontal" method="post" action=""
+        data-funcoes-url="{% url 'ajax_load_funcoes' %}" data-grupos-url="{% url 'ajax_load_grupos' %}">
+        {% csrf_token %}
+        <div class="form1" style="height: 450px; width: 900px">
+            <div class="form-group row mb-2">
+                <label class="control-label col-sm-2" for="id_nome">Nome:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="nome" maxlength="50" required id="id_nome">
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label class="control-label col-sm-2" for="id_cpf">CPF:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="cpf" maxlength="50" required id="id_cpf">
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label class="control-label col-sm-2" for="id_data_nascimento">Data de Nascimento:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="data_nascimento" maxlength="50" required id="id_data_nascimento">
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label class="control-label col-sm-2 ml-3" for="id_ctps">CTPS:</label>
+                <div class="col-sm-2">
+                    <input type="text" name="ctps" maxlength="50" required id="id_ctps">
+                </div>
+                <label class="control-label col-sm-2 ml-3" for="id_serie">SERIE:</label>
+                <div class="col-sm-2">
+                    <input type="text" name="serie" maxlength="50" required id="id_serie">
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label class="control-label col-sm-2 ml-3" for="id_data_inicio">Data Admissao:</label>
+                <div class="col-sm-2">
+                    <input type="text" name="data_inicio" maxlength="50" required id="id_data_inicio">
+                </div>
+                <label class="control-label col-sm-2 ml-3" for="id_data_fim">Data<br>Demissao:</label>
+                <div class="col-sm-2">
+                    <input type="text" name="data_demissao" maxlength="50" id="id_data_fim">
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label class="control-label col-sm-2" for="id_setor">Setor:</label>
+                <div class="col-sm-8">
+                    <select name="setor" required id="id_setor"  style="width: 75%; height: 30px; border: #CCC solid 1px">
+                        <option value="" selected>Selecione</option>
+                        {% for setor in setores %}
+                            <option value="{{ setor.id }}">{{ setor.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label class="control-label col-sm-2" for="id_funcao">Funcao:</label>
+                <div class="col-sm-8">
+                    <select name="funcao" required id="id_funcao"  style="width: 75%; height: 30px; border: #CCC solid 1px">
+                        <option value="" selected>Selecione</option>
+                        {% for funcao in funcoes %}
+                            <option value="{{ funcao.id }}">{{ funcao.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label class="control-label col-sm-2" for="id_grupo">Grupo:</label>
+                <div class="col-sm-8">
+                    <select name="grupo" required id="id_grupo"  style="width: 75%; height: 30px; border: #CCC solid 1px">
+                        <option value="" selected>Selecione</option>
+                        {% for grupo in grupos %}
+                            <option value="{{ grupo.id }}">{{ grupo.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="botoes">
+            <div class="form-group" style="text-align: center">
+                <button type="submit" style="color: white; margin: 0 auto" class="btn btn-primary btn-lg">Incluir</button>
+            </div>
+        </div>
+
+        {% if messages %}
+            <div class="alert alert-warning">
+            {% for m in messages %}
+                <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m }}</p>
+            {% endfor %}
+            </div>
+        {% endif %}
+    </form>
+    <script type="text/javascript">
+        $("#id_setor").change(function(){
+            const url = $('#personForm').attr("data-funcoes-url");
+            const setorId = $(this).val();
+            $.ajax({
+                url : url,
+                data : {
+                    'setor': setorId,
+                },
+                success: function(data){
+                    $("#id_funcao").html(data);
+                }
+            })
+        })
+        $("#id_funcao").change(function () {
+        const url = $("#personForm").attr("data-grupos-url");
+        const funcaoId = $(this).val();
+        const setorId = $('#id_setor').val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'funcao': funcaoId ,
+                'setor': setorId ,
+            },
+            success: function (data) {
+                $("#id_grupo").html(data);
+
+            }
+        });
+
+    });
+    </script>
+
+    {% endblock %}

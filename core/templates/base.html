@@ -1,0 +1,119 @@
+{% load static %}
+{% load extra_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Gerenciamento Ocupacional</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/x-icon"/>
+    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+    {#    <link rel="stylesheet" href="../../dist/reportbro.css"/>#}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    {#    <script src="../../dist/reportbro.js"></script>#}
+
+<body>
+{#    <div id="reportbro"></div>#}
+<div class="container-fluid">
+    <div class="topo">
+        <h1>Sistema de Gerenciamento Ocupacional</h1>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Tabelas Básicas
+                        </a>
+                        <ul class="dropdown-menu sm-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'lista_funcoes' %}">Funções</a></li>
+                            <li><a class="dropdown-item" href="/lista_setores">Setores</a></li>
+                            <li><a class="dropdown-item" href="/lista_tipo_riscos">Tipos de Riscos</a></li>
+                            <li><a class="dropdown-item" href="/lista_riscos">Riscos</a></li>
+                            <li><a class="dropdown-item" href="/lista_exames">Exames</a></li>
+                            <li><a class="dropdown-item" href="/lista_grupos">Grupos Homogêneos</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Cadastros
+                        </a>
+                        <ul class="dropdown-menu sm-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/lista_empregados">Empregados</a></li>
+                            <li><a class="dropdown-item" href="/lista_coords">Coordenador</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/lista_atendimentos">Atendimentos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/alterar_senha">Alterar senha</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav mb-2 navbar-right">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="accounts/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% block content %}
+
+    {% endblock %}
+    {#        <script type="text/javascript">#}
+    {#            $(document).ready(function() {#}
+    {#                $("#reportbro").reportBro();#}
+    {#            });#}
+    {#        </script>#}
+    <div class="fixed">
+        <footer>
+            {% current_time "%Y-%m-%d %I:%M %p" as the_time %}
+            <h4><span>Todos os direitos reservados</span><span style="float: right"> {{ the_time }}</span> </h4>
+
+        </footer>
+    </div>
+</div>
+<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/jquery.mask.min.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.navbar-light .dmenu').hover(function () {
+            $(this).find('.sm-menu').first().stop(true, true).slideDown(150);
+        }, function () {
+            $(this).find('.sm-menu').first().stop(true, true).slideUp(105)
+        });
+
+        $("#id_data_inicio").mask("00/00/0000");
+        $("#data_inicio").mask("00/00/0000");
+        $("#data_atendimento").mask("00/00/0000");
+        $("#id_data_fim").mask("00/00/0000");
+        $("#data_fim").mask("00/00/0000");
+        $("#id_data_nascimento").mask("00/00/0000");
+        $("#data_nascimento").mask("00/00/0000");
+        $("#data_admissao").mask("00/00/0000");
+        $("#data_demissao").mask("00/00/0000");
+        $("#data").mask("00/00/0000");
+        $("#cpf").mask("000.000.000-00");
+        $("#id_cpf").mask("000.000.000-00");
+    });
+
+
+</script>
+</body>
+</html>

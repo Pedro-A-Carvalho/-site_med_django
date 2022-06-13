@@ -1,0 +1,42 @@
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <div class="titulo">RISCOS</div>
+    <form name="form" id="form" class="form-horizontal" method="post" action="">
+        {% csrf_token %}
+        <div class="form1" style="height: 140px">
+            <div class="form-group row">
+                <label class="control-label col-sm-3" for="id_nome">Nome:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="nome" maxlength="50" required id="id_nome">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-3" for="id_tiporisco">Tipo de risco:</label>
+                <div class="col-sm-8">
+                    <select name="tiporisco" required id="id_tiporisco"  style="width: 75%; height: 30px; border: #CCC solid 1px">
+                        <option value="" selected>Selecione</option>
+                        {% for tiporisco in tiporiscos %}
+                            <option value="{{ tiporisco.id }}">{{ tiporisco.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="botoes">
+            <div class="form-group" style="text-align: center">
+                <button type="submit" style="color: white; margin: 0 auto" class="btn btn-primary btn-lg">Incluir</button>
+            </div>
+        </div>
+
+        {% if messages %}
+            <div class="alert alert-warning">
+            {% for m in messages %}
+                <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m }}</p>
+            {% endfor %}
+            </div>
+        {% endif %}
+    </form>
+
+    {% endblock %}

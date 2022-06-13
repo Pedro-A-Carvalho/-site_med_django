@@ -1,0 +1,31 @@
+    {% extends 'base.html' %}
+
+    {% load crispy_forms_tags %}
+
+    {% block content %}
+    <div class="titulo">ALTERAR SENHA</div>
+    <form name="form" id="form" class="form-horizontal" method="post" action="">
+        {% csrf_token %}
+        <div class="form1" style="height: 470px; width: 900px">
+            <div class="form-group row">
+                <label class="control-label col-sm-3" for="id_nome">&nbsp</label>
+                <div class="col-sm-8">
+                    {{ form | crispy}}
+                </div>
+            </div>
+        </div>
+        {% if messages %}
+            <div class="alert alert-warning">
+            {% for m in messages %}
+                <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m }}</p>
+            {% endfor %}
+            </div>
+        {% endif %}
+        <div class="botoes">
+            <div class="form-group" style="text-align: center">
+                <button type="submit" style="color: white; margin: 0 auto" class="btn btn-primary btn-lg">Alterar</button>
+            </div>
+        </div>
+    </form>
+
+    {% endblock %}

@@ -1,0 +1,85 @@
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <div class="titulo">GRUPOS HOMOGENEOS</div>
+    <form name="form" id="form" class="form-horizontal" method="post" action="{% url 'grupofuncao_novo' grupo.id %}">
+        {% csrf_token %}
+        <div class="tab">
+            <ul class="nav nav-tabs">
+                <li class=" nav-item"><a class="nav-link " href="{% url 'lista_grupos' %}">Grupos</a> </li>
+                <li class="nav-item"><a class="nav-link active" href="{% url 'grupofuncao_novo' grupo.id %}">Funcao x Setor</a> </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'gruporisco_novo' grupo.id %}">Riscos</a> </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'grupoexame_novo' grupo.id %}">Exames</a> </li>
+            </ul>
+        </div>
+        <div class="form1">
+            <div class="form-group row">
+                <label class="control-label col-sm-3" for="nome">Nome</label>
+                <div class="col-sm-8">
+                    <input type="text" name="nome" maxlength="50" required id="id_nome" value="{{ grupo.nome }}">
+                </div>
+            </div>
+        </div>
+        <div class="form3">
+            <div class="form-group row">
+                <label class="control-label col-sm-3" for="setor_id">Setor:</label>
+                <div class="col-sm-8">
+                    <select name="setor_id" required id="setor_id"  style="width: 75%; height: 30px; border: #CCC solid 1px">
+                        <option value="" selected>Selecione</option>
+                        {% for setor in setores %}
+                            <option value="{{ setor.id }}">{{ setor.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                    <label class="control-label col-sm-3" for="funcao_id">Funcao:</label>
+                    <div class="col-sm-8">
+                        <select name="funcao_id" required id="funcao_id"  style="width: 75%; height: 30px; border: #CCC solid 1px">
+                            <option value="" selected>Selecione</option>
+                            {% for funcao in funcoes %}
+                                <option value="{{ funcao.id }}">{{ funcao.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        <div class="botoes">
+            <div class="form-group" style="text-align: center">
+                <button type="submit" style="color: white; margin: 0 auto" class="btn btn-primary btn-lg">Incluir</button>
+            </div>
+        </div>
+        {% if messages %}
+            <div class="alert alert-warning">
+            {% for m in messages %}
+                <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m }}</p>
+            {% endfor %}
+            </div>
+        {% endif %}
+        <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>SETOR</th>
+            <th>FUNÇÃO</th>
+            <th style="width: 50px">&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for grupofuncao in grupofuncoes %}
+        <tr>
+            <td>{{ grupofuncao.setor.nome }}</td>
+            <td>{{ grupofuncao.funcao.nome }}</td>
+            <td style="width:60px; text-align: center;">
+                <a href="{% url 'grupofuncao_delete' grupofuncao.id %}" style="color:#fff" class="btn btn-danger">
+                Del
+                </a>
+            </td>
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+    </form>
+
+    {% endblock %}

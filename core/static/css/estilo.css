@@ -1,0 +1,151 @@
+label{
+    padding:0;
+    padding-top: 6px;
+    text-align: end;
+}
+
+.row{
+    margin: 10px 10px;
+}
+
+.topo{
+    color:darkblue;
+    margin:auto;
+    text-align: center;
+}
+
+
+
+input{
+    border: 1px solid #ccc;
+    padding-top: 5px;
+}
+
+#corpo{
+    background-color:#fff;
+    width: 400px;
+    height: 220px;
+    margin: auto;
+    text-align: center;
+}
+
+#title{
+    background-color:#163550;
+    color: #fff; width: 400px;
+    height: 40px;
+    margin: auto;
+    margin-bottom: 20px;
+    text-align: center;
+    padding-top: 8px;
+    font-size: 16px;
+}
+
+#corpo2{
+    min-height: 600px;
+}
+
+.form1{
+    background-color:#e6f2ff;
+    width:550px;
+    height:110px;
+    margin:auto;
+    border:solid #CCC 1px;
+    margin-top:30px;
+    padding-top:40px;
+}
+
+.form3{
+    background-color:#e6f2ff;
+    width:550px;
+    height:180px;
+    margin:auto;
+    border:solid #CCC 1px;
+    margin-top:10px;
+    padding-top:40px;
+}
+
+.form5 {
+    background-color: #e6f2ff;
+    width: 800px;
+    height: 220px;
+    margin: auto;
+    border: solid #CCC 1px;
+    margin-top: 30px;
+    padding-top: 40px;
+}
+
+
+.tab{
+    width:800px;
+    margin:auto;
+    margin-top:10px;
+    margin-bottom:-27px;
+    background-color:#FFF;
+    cursor:pointer;
+}
+
+.ele2{
+    background-color: red;
+}
+
+.pagination {
+    margin-bottom:20px;
+    font-size: 18px;
+}
+
+
+.titulo{
+    height:40px;
+    background:#fff;
+    color:darkblue;
+    font-family:Arial, Helvetica, sans-serif;
+    text-align:center;
+    font-size: 20px;
+    font-weight: bold;
+    border-top: solid 1px #335070;
+    border-bottom: solid 1px #335070;
+    margin: 10px auto 30px;
+    padding-top: 5px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color:#fff; padding-left: 15px; padding-top: 10px; font-size: 18px; margin-right: 20px;
+    text-decoration: none;
+}
+.navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link:focus {
+    color: rgba(0, 0, 0, 0.7);
+    background-color: #007bff;
+    }
+
+.navbar-collapse {
+    padding-top: 10px;
+}
+    
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: .25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    font-size: 16px;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
+
+/* Comandos para o Rodapé*/
+footer{ 
+    background-color: #0069d9; height: 50px; padding-top: 7px; padding-left: 20px; 
+    color: #fff; margin-top: 30px;
+}
+footer h4{
+    color: #fff; font-weight: bold;
+}
+
+.fixed{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

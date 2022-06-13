@@ -1,0 +1,142 @@
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <div class="titulo">EMPREGADOS</div>
+    <form name="personForm" id="personForm" class="form-horizontal" method="post" action="{% url 'empregado_update' empregado.id %}"
+        data-funcoes-url="{% url 'ajax_load_funcoes' %}" data-grupos-url="{% url 'ajax_load_grupos' %}">
+        {% csrf_token %}
+        <div class="form1" style="height: 450px; width: 900px">
+            <div class="form-group row mb-2">
+                <label class="control-label col-sm-2" for="nome">Nome:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="nome" maxlength="50" required id="nome" value="{{ empregado.nome }}">
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label class="control-label col-sm-2" for="cpf">CPF:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="cpf" maxlength="50" required id="cpf" value="{{ empregado.cpf }}">
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label class="control-label col-sm-2" for="data_nascimento">Data de Nascimento:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="data_nascimento" maxlength="50" required id="data_nascimento" value="{{ empregado.data_nascimento| date:"d/m/Y" }}">
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label class="control-label col-sm-2 ml-3" for="ctps">CTPS:</label>
+                <div class="col-sm-2">
+                    <input type="text" name="ctps" maxlength="50" required id="ctps" value="{{ empregado.ctps }}">
+                </div>
+                <label class="control-label col-sm-2 ml-3" for="serie">SERIE:</label>
+                <div class="col-sm-2">
+                    <input type="text" name="serie" maxlength="50" required id="serie" value="{{ empregado.serie }}">
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label class="control-label col-sm-2 ml-3" for="data_admissao">Data Admissao:</label>
+                <div class="col-sm-2">
+                    <input type="text" name="data_admissao" maxlength="50" required id="data_admissao" value="{{ empregado.data_inicio| date:"d/m/Y" }}">
+                </div>
+                <label class="control-label col-sm-2 ml-3" for="data_demissao">Data<br>Demissao:</label>
+                <div class="col-sm-2">
+                    <input type="text" name="data_demissao" maxlength="50" id="data_demissao" value="{{ empregado.data_fim| date:"d/m/Y"}}">
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label class="control-label col-sm-2" for="setor_id">Setor:</label>
+                <div class="col-sm-8">
+                    <select name="setor_id" required id="setor_id"  style="width: 75%; height: 30px; border: #CCC solid 1px">
+                        <option value="" selected>Selecione</option>
+                        {% for setor in setores %}
+                            {% if empregado.setor_id == setor.id %}
+                                <option value="{{ setor.id }}" selected>{{ setor.nome }}</option>
+                            {% else %}
+                                <option value="{{ setor.id }}">{{ setor.nome }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label class="control-label col-sm-2" for="funcao_id">Funcao:</label>
+                <div class="col-sm-8">
+                    <select name="funcao_id" required id="funcao_id"  style="width: 75%; height: 30px; border: #CCC solid 1px">
+                        <option value="" selected>Selecione</option>
+                        {% for funcao in funcoes %}
+                            {% if empregado.funcao_id == funcao.id %}
+                                <option value="{{ funcao.id }}" selected>{{ funcao.nome }}</option>
+                            {% else %}
+                                <option value="{{ funcao.id }}">{{ funcao.nome }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label class="control-label col-sm-2" for="grupo_id">Grupo:</label>
+                <div class="col-sm-8">
+                    <select name="grupo_id" required id="grupo_id"  style="width: 75%; height: 30px; border: #CCC solid 1px">
+                        <option value="" selected>Selecione</option>
+                        {% for grupo in grupos %}
+                            {% if empregado.grupo_id == grupo.id %}
+                                <option value="{{ grupo.id }}" selected>{{ grupo.nome }}</option>
+                            {% else %}
+                                <option value="{{ grupo.id }}">{{ grupo.nome }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="botoes">
+            <div class="form-group" style="text-align: center">
+                <button type="submit" style="color: white; margin: 0 auto" class="btn btn-primary btn-lg">Alterar</button>
+            </div>
+        </div>
+
+        {% if messages %}
+            <div class="alert alert-warning">
+            {% for m in messages %}
+                <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m }}</p>
+            {% endfor %}
+            </div>
+        {% endif %}
+    </form>
+    <script type="text/javascript">
+        $("#setor_id").change(function(){
+            const url = $('#personForm').attr("data-funcoes-url");
+            const setorId = $(this).val();
+            $.ajax({
+                url : url,
+                data : {
+                    'setor_id': setorId,
+                },
+                success: function(data){
+                    $("#funcao_id").html(data);
+                }
+            })
+        })
+        $("#funcao_id").change(function () {
+        const url = $("#personForm").attr("data-grupos-url");
+        const funcaoId = $(this).val();
+        const setorId = $('#setor_id').val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'funcao_id': funcaoId ,
+                'setor_id': setorId ,
+            },
+            success: function (data) {
+                $("#grupo_id").html(data);
+
+            }
+        });
+
+    });
+    </script>
+
+    {% endblock %}
